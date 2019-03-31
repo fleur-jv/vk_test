@@ -1,15 +1,14 @@
-Given(/^I am on the VK main page$/) do
-  # Capybara.current_session.driver.visit "https://vk.com"
+When(/^I am on the VK main page$/) do
   visit "https://vk.com"
 end
 
-# When(/^I search for ([^"]*)$/) do |query|
-#   page.find("input#lst-ib").send_keys("#{query}")
-#   page.find(:xpath, "//span[@class='lsbb']//input[@value='Поиск в Google']").click
-# end
+And(/^The page title is ([^"]*)$/) do |query|
+  expect(page).to have_content("#{query}")
+  @logger.info "Open VK successfully: Page title is \"#{page.title}\""
+end
 
-Then(/^the page title should start with ([^"]*)$/) do |query|
-  expect(page).to have_content("#{query} пожаловать | ВКонтакте")
-  puts "Page title is \"#{page.title}\""
-  Capybara.current_session.driver.quit
+Then(/^Click at change language link$/) do
+  click_link 'Switch to English'
+  expect(page).to have_content('Welcome! | VK')
+  @logger.info "Switch language successfully: Page title is \"#{page.title}\""
 end
