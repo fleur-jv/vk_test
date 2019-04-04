@@ -3,7 +3,7 @@ When(/^I am on the VK main page$/) do
 end
 
 And(/^The page title is (.*)$/) do |title|
-  expect(page).to have_content("#{title}")
+  check_title title
   @logger.info "Open VK successfully: Page title is \"#{page.title}\""
 end
 
@@ -27,7 +27,7 @@ end
 
 Then(/^Try to register$/) do
   click_button 'ij_submit'
-  expect(page).to have_content 'Регистрация | ВКонтакте'
+  check_title 'Регистрация | ВКонтакте'
   @logger.info "Open registration page successfully: Page title is \"#{page.title}\""
   @logger.info "You can confirm registration for #{@first_name} #{@last_name}"
 end
@@ -55,12 +55,19 @@ end
 
 Then(/^Try to login$/) do
   click_button 'index_login_button'
-  expect(page).to have_content 'Новости'
+  check_title 'Новости'
   @logger.info "Successfull login: Page title is \"#{page.title}\""
 end
 
-Then(/^Click at (.*) and check (.*)$/) do |link, title|
+Then(/^Click at (.*) and check (.*)$/) do |raw_link, title|
+  link = first :xpath, "//a[@href='/#{raw_link}']"
+  link.click
+  check_title "#{title}"
+  @logger.info "Link clicked successfully: Page title is \"#{page.title}\""
+end
+
+Then(/^Functional (.*) clicked and (.*) checked$/) do |link, title|
   click_link "#{link}"
-  expect(page).to have_content "#{title}"
-  @logger.info "Switch language successfully: Page title is \"#{page.title}\""
+  check_title "#{title}"
+  @logger.info "Functional link clicked successfully: Page title is \"#{page.title}\""
 end

@@ -36,13 +36,16 @@ Feature: Main page vk.com
   Scenario Outline: Links
     Then Click at <link> and check <title>
     Examples:
+    |link     |title                                         |
+    |products |Продукты \| ВКонтакте                         |
+    |about    |О компании \| ВКонтакте                       |
+    |terms    |Пользовательское соглашение \| ВКонтакте      |
+    |ads      |VK Business \| ВКонтакте                      |
+    |dev      |Разработчикам \| ВКонтакте                    |
+
+  Scenario Outline: Functional links
+    Then Functional <link> clicked and <title> checked
+    Examples:
     |link             |title                                         |
-    |Все продукты     |Продукты \| ВКонтакте                         |
-    |о компании       |О компании \| ВКонтакте                       |
-    |правила          |Пользовательское соглашение \| ВКонтакте      |
-    |реклама          |VK Business \| ВКонтакте                      |
-    |разработчикам    |Разработчикам \| ВКонтакте                    |
     |Switch to English|Welcome! \| VK                                |
     |index_forgot     |Восстановление доступа к странице \| ВКонтакте|
-
-
